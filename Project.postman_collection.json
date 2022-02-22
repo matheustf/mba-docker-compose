@@ -1,0 +1,133 @@
+{
+	"info": {
+		"_postman_id": "4f35df4d-ac69-4c61-96d4-bafb6cb85d95",
+		"name": "Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "avaliacoes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"teles.matheus@hotmail.com\",\r\n    \"nomeCliente\": \"Matheus\",\r\n    \"idProduto\": \"123\",\r\n    \"idCompra\": \"123\",\r\n    \"notaDeSatisfacao\": 5,\r\n    \"titulo\": \"Gostei do produto\",\r\n    \"descricao\": \"A entrega foi rápida e o produto é exatamente como imaginei\",\r\n    \"dataDaAvaliacao\": \"19/02/2022\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8084/avaliacoes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"avaliacoes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "avaliacoes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8084/avaliacoes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"avaliacoes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "avaliacoes",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"aaateles.matheus@hotmail.com\",\r\n    \"nomeCliente\": \"asdasdas\",\r\n    \"idProduto\": \"3333\",\r\n    \"idCompra\": \"3333\",\r\n    \"notaDeSatisfacao\": 1,\r\n    \"titulo\": \"11111111111\",\r\n    \"descricao\": \"111111111111111\",\r\n    \"dataDaAvaliacao\": \"19/02/2022\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8084/avaliacoes/6211587f7642274f71eab41a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"avaliacoes",
+						"6211587f7642274f71eab41a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "avaliacoes",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8084/avaliacoes/621158310abf822c716d9e5d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"avaliacoes",
+						"621158310abf822c716d9e5d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nomeDoUsuario\" : \"Matheus\",\r\n  \"emailDestinatario\" : \"teles.matheus@hotmail.com\",\r\n  \"tipoDeEmail\" : \"OBRIGADO_AVALIACAO\",\r\n  \"contentReplace\" : {\r\n    \"**usuario**\" : \"Matheus\"\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8070/email",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8070",
+					"path": [
+						"email"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

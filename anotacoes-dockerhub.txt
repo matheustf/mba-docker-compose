@@ -1,0 +1,51 @@
+
+- Gerar imagens docker do codigo
+mvn spring-boot:build-image
+
+- Enviar imagem para o docker hub (docker tag local-image:tagname new-repo:tagname)
+	--Criar repositorio na interface do docker hub
+	--Logar no docker por linha de comando
+		docker login -u "matheustf" -p "senha" docker.io
+
+docker tag avaliacao:0.0.1-SNAPSHOT matheustf/mba-avaliacao:v1
+
+docker push matheustf/mba-avaliacao:v1
+
+
+- Remover todas as imagens locais
+docker rmi $(docker images -a -q)
+
+
+-Forçar remoção da imagem
+docker rmi -f mba-avaliacao:v1
+
+- Sequecia para limpar
+
+docker kill $(docker ps -q)
+docker rm $(docker ps -a -q)
+docker rmi $(docker images -q)
+
+
+
+- Entrar em um container
+winpty docker exec -it 72164f857007 bash
+
+
+-Entrar no container e executar o ping
+docker exec -it 72164f857007 ping another
+
+
+-Passos para gerar a imagem no docker hub
+
+mvn spring-boot:build-image
+docker tag avaliacao:0.0.1-SNAPSHOT matheustf/mba-avaliacao:v9
+docker push matheustf/mba-avaliacao:v9
+
+
+mvn spring-boot:build-image
+docker tag emailserver:0.0.1-SNAPSHOT matheustf/mba-emailserver:v2
+docker push matheustf/mba-emailserver:v2
+
+mvn spring-boot:build-image
+docker tag eurekaserver:0.0.1-SNAPSHOT matheustf/mba-eurekaserver:v2
+docker push matheustf/mba-eurekaserver:v2

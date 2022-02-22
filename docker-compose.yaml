@@ -1,0 +1,102 @@
+version: '3'
+
+
+services:
+
+  eureka:
+    container_name: eureka
+    image: matheustf/mba-eurekaserver:v2
+    hostname: eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - docker_network
+    command: mvn clean spring-boot:run
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+    
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - docker_network
+    volumes:
+     - $PWD/storage/rabbitmq1:/var/lib/rabbitmq
+    environment:
+     - RABBITMQ_ERLANG_COOKIE=This_is_my_secret_phrase
+     - RABBITMQ_DEFAULT_USER=mqadmin
+     - RABBITMQ_DEFAULT_PASS=Admin123XX_
+     - CLUSTERED=true
+
+
+  mongoavaliacao:
+    container_name: mongoavaliacao
+    image: alexpunct/mongo:3.4
+    ports:
+      - "27017:27017"
+    networks:
+      - docker_network
+    environment:
+      - MONGODB_ADMIN_USER=admin
+      - MONGODB_ADMIN_PASS=adminpass
+      - MONGODB_APPLICATION_DATABASE=avaliacaodb
+      - MONGODB_APPLICATION_USER=matheus
+      - MONGODB_APPLICATION_PASS=a123456
+
+  avaliacao1:    
+    container_name: avaliacao1
+    image: matheustf/mba-avaliacao:v9
+    ports:
+      - "8084:8084"
+    networks:
+      - docker_network
+    command: mvn clean spring-boot:run
+    depends_on:
+      - eureka
+      - mongoavaliacao
+    links:
+      - eureka
+      - mongoavaliacao
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+      - MONGO_HOST=mongoavaliacao
+      - MONGO_PORT=27017
+      - MONGO_DATABASE=avaliacaodb
+      - MONGO_USERNAME=matheus
+      - MONGO_PASSWORD=a123456
+      - EUREKA_HOST=eureka
+      - RABBIT_HOST=rabbitmq
+      - RABBIT_USERNAME=mqadmin
+      - RABBIT_PASSWORD=Admin123XX_
+      - JVM_OPTS=-Xmx256m -Xms256m -XX:MaxPermSize=256m
+      
+  emailserver:
+    container_name: emailserver
+    image: matheustf/mba-emailserver:v2
+    restart: always
+    ports:
+      - "8070:8070"
+    networks:
+      - docker_network
+    command: mvn clean spring-boot:run
+    depends_on:
+      - rabbitmq
+      - eureka
+    links:
+      - rabbitmq
+      - eureka
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+      - EUREKA_HOST=eureka
+      - RABBIT_HOST=rabbitmq
+      - RABBIT_USERNAME=mqadmin
+      - RABBIT_PASSWORD=Admin123XX_
+      - JVM_OPTS=-Xmx256m -Xms256m -XX:MaxPermSize=256m
+
+networks:
+  docker_network:
+    driver: bridge
