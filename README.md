@@ -33,5 +33,6 @@ docker rm $(docker ps -a -q)
 ### Deletar todas as imagens:
 docker rmi $(docker images -q)
 
+##Arquitetura
 
 ![Arquitetura Mba Docker-compose (1)](https://user-images.githubusercontent.com/16195588/155224200-bdfd669b-b98c-4f8e-8ee7-ba1406fe7fb7.jpg)
